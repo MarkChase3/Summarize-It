@@ -25,24 +25,28 @@
         const txt = document.getElementById('summary')
         txt.value = localStorage.getItem('text')
         document.addEventListener('keydown', e => {
-            if (e.key == '_' && (txt.selectionStart == 0 || txt.value[txt.selectionStart-1] == '\n')) {
+            if (e.key == '+') {
                 e.preventDefault()
                 let oldCursorPos = txt.selectionStart
                 let output = txt.value.substring(0, oldCursorPos)
-                oldCursorPos += 1
-                if (txt.value[oldCursorPos] != '\t'){
-                    output += '\t⤷'
-                    oldCursorPos += 1
-                }
-                else output = output.substring(0, output.length - 1) + '\t' + output[output.length-1]
-                output += txt.value.substring(oldCursorPos, txt.value.length)
+                output += '⤷'
+                output += txt.value.substring(txt.selectionStart, txt.value.length)
+                txt.value = output
+                txt.selectionStart = oldCursorPos
+                txt.selectionEnd = oldCursorPos
+            } else if (e.key == '_') {
+                e.preventDefault()
+                let oldCursorPos = txt.selectionStart
+                let output = txt.value.substring(0, oldCursorPos)
+                output += '\t'
+                output += txt.value.substring(txt.selectionStart, txt.value.length)
                 txt.value = output
                 txt.selectionStart = oldCursorPos
                 txt.selectionEnd = oldCursorPos
             } else if (e.key == '#' && (txt.selectionStart == 0 || txt.value[txt.selectionStart-1] == '\n')) {
                 e.preventDefault()
                 let oldCursorPos = txt.selectionStart
-                txt.value = txt.value.replace (/[A-Za-z]/g, translate)
+                txt.value = txt.value.substring(0, oldCursorPos) + txt.value.substring(oldCursorPos, txt.value.indexOf('\n')).replace (/[A-Za-z]/g, translate) + txt.value.substring(txt.value.indexOf('\n'), txt.value.length)
                 txt.selectionStart = oldCursorPos
                 txt.selectionEnd = oldCursorPos
             }
