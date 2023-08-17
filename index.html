@@ -25,6 +25,7 @@
         const txt = document.getElementById('summary')
         txt.value = localStorage.getItem('text')
         document.addEventListener('keydown', e => {
+            console.log(e.key)
             if (e.key == '+') {
                 e.preventDefault()
                 let oldCursorPos = txt.selectionStart
