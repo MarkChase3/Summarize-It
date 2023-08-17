@@ -30,7 +30,7 @@
                 let oldCursorPos = txt.selectionStart
                 let output = txt.value.substring(0, oldCursorPos)
                 oldCursorPos += 1
-                if (txt.value[oldCursorPos-2] != '⤷'){
+                if (txt.value[oldCursorPos] != '\t'){
                     output += '\t⤷'
                     oldCursorPos += 1
                 }
