@@ -25,7 +25,7 @@
         const txt = document.getElementById('summary')
         txt.value = localStorage.getItem('text')
         document.addEventListener('keydown', e => {
-            if (e.key == 'Tab') {
+            if (e.key == '_' && (txt.selectionStart == 0 || txt.value[txt.selectionStart-1] == '\n')) {
                 e.preventDefault()
                 let oldCursorPos = txt.selectionStart
                 let output = txt.value.substring(0, oldCursorPos)
