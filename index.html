@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summarize-it</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <textarea id="summary"></textarea>
+    <script>
+        
+        function translate(char) {
+            let diff;
+            if (/[A-Z]/.test(char)) {
+                diff = "𝗔".codePointAt(0) - "A".codePointAt(0);
+            }
+            else {
+                diff = "𝗮".codePointAt(0) - "a".codePointAt(0);
+            }
+            return String.fromCodePoint(char.codePointAt(0) + diff);
+        }
+        const txt = document.getElementById('summary')
+        txt.value = localStorage.getItem('text')
+        document.addEventListener('keydown', e => {
+            if (e.key == 'Tab') {
+                e.preventDefault()
+                let oldCursorPos = txt.selectionStart
+                let output = txt.value.substring(0, oldCursorPos)
+                oldCursorPos += 1
+                if (txt.value[oldCursorPos-2] != '⤷'){
+                    output += '\t⤷'
+                    oldCursorPos += 1
+                }
+                else output = output.substring(0, output.length - 1) + '\t' + output[output.length-1]
+                output += txt.value.substring(oldCursorPos, txt.value.length)
+                txt.value = output
+                txt.selectionStart = oldCursorPos
+                txt.selectionEnd = oldCursorPos
+            } else if (e.key == '#' && (txt.selectionStart == 0 || txt.value[txt.selectionStart-1] == '\n')) {
+                e.preventDefault()
+                let oldCursorPos = txt.selectionStart
+                txt.value = txt.value.replace (/[A-Za-z]/g, translate)
+                txt.selectionStart = oldCursorPos
+                txt.selectionEnd = oldCursorPos
+            }
+            localStorage.setItem('text', txt.value)
+        })
+    </script>
+</body>
+
+</html>
