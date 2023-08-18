@@ -26,7 +26,7 @@
         txt.value = localStorage.getItem('text')
         document.addEventListener('keydown', e => {
             console.log(e.key)
-            if(e.key != 'Backspace') return
+            if(e.key != 'Enter') return
             if (txt.value[txt.selectionStart-1] == '+') {
                 e.preventDefault()
                 let oldCursorPos = txt.selectionStart
