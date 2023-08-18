@@ -48,7 +48,7 @@
             } else if (txt.value[txt.selectionStart-1] == '#') {
                 e.preventDefault()
                 let oldCursorPos = txt.selectionStart
-                txt.value = txt.value.substring(0, oldCursorPos-1) + txt.value.substring(oldCursorPos, txt.value.indexOf('\n')).replace (/[A-Za-z]/g, translate) + txt.value.substring(txt.value.indexOf('\n'), txt.value.length)
+                txt.value = txt.value.substring(0, oldCursorPos-1) + txt.value.substring(oldCursorPos-1, txt.value.indexOf('\n')).replace (/[A-Za-z]/g, translate) + txt.value.substring(txt.value.indexOf('\n'), txt.value.length)
                 txt.selectionStart = oldCursorPos
                 txt.selectionEnd = oldCursorPos
             }
